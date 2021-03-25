@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Spring boot email template with Thymeleaf</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <!-- use the font -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            width: 100%;
+            border: none;
+        }
+
+        hr{
+            border: none;
+            height: 1px;
+            width:100%;
+
+            background-color: gray;
+        }
+        th {
+            border-bottom: 1px solid black;
+            text-align: left;
+        }
+
+        td{
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+<p th:text="'Hi ' + ${nameName} + ','" ></p>
+
+<p>Thank you for your purchase!</p>
+
+<div style="height: 20px"></div>
+<br />
+<br />
+<table style="width: 100%">
+<tr>
+    <th >Product name</th>
+
+
+    <th>Product description</th>
+
+
+    <th >Price</th>
+
+
+    <th > Quantity</th>
+
+
+    <th >Total</th>
+</tr>
+
+<tr th:each="Products, iterator : ${list}">
+
+<td th:text="${iterator.index + 1} + '. ' + ${Products.productName}"></td>
+
+
+    <td th:text="${Products.productDescription}"></td>
+
+
+    <td th:text="${#numbers.formatDecimal(Products.productPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+
+
+        <td th:text="${Products.productQuantity}">Product name</td>
+
+
+        <td th:text="${#numbers.formatDecimal((Products.productQuantity * Products.productPrice), 0, 'COMMA', 2, 'POINT')}"></td>
+
+
+</tr>
+
+    <tr>
+        <td colspan="2" style="border-top: solid 1px"></td>
+        <td colspan="2" style="text-align: left; border-top: solid 1px" >Shipping:</td>
+        <td style="text-align: left; border-top: solid 1px">125.00</td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+        <td colspan="2" style="text-align: left; font-weight: bold">Total for payment:</td>
+        <td style="font-weight: bold; text-align: left" th:text="${#numbers.formatDecimal(sum, 0, 'COMMA', 2, 'POINT')}"></td>
+    </tr>
+</table>
+
+
+
+
+
+
+</body>
+</html>
